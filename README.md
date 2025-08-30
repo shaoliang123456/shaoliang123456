@@ -1,10 +1,4 @@
-- 👋 Hi, I’m @shaoliang
-- 👀 I’m interested in Java,React,Web Developer,Saas
-- 🌱 I’m currently learning React
-- 💞️ I’m looking to collaborate on coding
-- 📫 How to reach me 18605810271
-- 😄 Pronouns: do smart ,do heart
-- ⚡ Fun fact: im learing gym
+热爱运动和代码，一个终身成长者
 
 <!---
 shaoliang123456/shaoliang123456 is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
