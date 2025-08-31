@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/shaoliang123456/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -147,7 +147,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/shaoliang123456/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -203,7 +203,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2025-08-31 10:08:36 / Modified: 10:32:14" itemprop="dateCreated datePublished" datetime="2025-08-31T10:08:36+08:00">2025-08-31</time>
+      <time title="Created: 2025-08-31 10:08:36 / Modified: 22:37:55" itemprop="dateCreated datePublished" datetime="2025-08-31T10:08:36+08:00">2025-08-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -225,28 +225,56 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>在创建hexo blog时候，使用npm install hexo-theme-next 的时候 themes 目录创建在了blog 的同级目录，其实正确的位置应该是在blog下级。<br>把themes目录挪过去最简单直接的是复制:</p>
+          <h2 id="遇到的情况"><a href="#遇到的情况" class="headerlink" title="遇到的情况"></a>遇到的情况</h2><p>在创建 <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> 博客时，我发现使用 <code>npm install hexo-theme-next</code> 后，themes 目录被创建在了 blog 的同级目录。经过了解，我意识到正确的位置应该是在 blog 的下级目录。</p>
+<h2 id="解决方案的思考"><a href="#解决方案的思考" class="headerlink" title="解决方案的思考"></a>解决方案的思考</h2><h3 id="方案一：直接复制文件"><a href="#方案一：直接复制文件" class="headerlink" title="方案一：直接复制文件"></a>方案一：直接复制文件</h3><p>最初想到的解决方式是直接复制文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> -r node_modules/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
 
-<p>但是这样的话等于一份文件占用了两份空间，而且后面还需要手动同步，管理难度较为复杂。</p>
-<p>后面采用了软连接的方案，语法为：<code>ln -s [源文件/目录] [链接名]</code></p>
+<p>这种方式简单直接，但我发现它有一些需要考虑的地方：</p>
+<ul>
+<li>一份文件会占用两份磁盘空间</li>
+<li>当主题更新时，需要手动同步两个位置的文件</li>
+<li>随着时间推移，管理复杂度会增加</li>
+</ul>
+<h3 id="方案二：软连接（符号链接）"><a href="#方案二：软连接（符号链接）" class="headerlink" title="方案二：软连接（符号链接）"></a>方案二：软连接（符号链接）</h3><p>经过进一步了解，我发现了软连接这个解决方案。关于软连接的详细说明，可以参考 <a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-ln.html">Linux ln 命令</a>。</p>
+<p>它的语法为：<code>ln -s [源文件/目录] [链接名]</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s ../node_modules/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
 
-<p>优点：</p>
+<p>我觉得这种方式有以下优势：</p>
 <ol>
-<li><strong>节省空间</strong>：不复制文件，只是创建了一个指针</li>
-<li><strong>自动同步</strong>：源文件更新时，链接自动反映最新内容  </li>
-<li><strong>易于管理</strong>：更新时，链接自动指向新版本</li>
+<li><strong>空间效率</strong>：不需要复制文件，只创建一个指向源文件的指针</li>
+<li><strong>自动同步</strong>：当源文件更新时，链接会自动反映最新内容  </li>
+<li><strong>维护便利</strong>：主题更新时，链接会自动指向新版本</li>
 </ol>
-<h2 id="软连接的发展历程"><a href="#软连接的发展历程" class="headerlink" title="软连接的发展历程"></a>软连接的发展历程</h2><h3 id="20年前-2004年-Unix系统库管理"><a href="#20年前-2004年-Unix系统库管理" class="headerlink" title="20年前 (2004年) - Unix系统库管理"></a>20年前 (2004年) - Unix系统库管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统库的版本管理</span></span><br><span class="line">/usr/lib/libssl.so.1.0.0    <span class="comment"># 实际的库文件</span></span><br><span class="line">/usr/lib/libssl.so.1.0 -&gt; libssl.so.1.0.0  <span class="comment"># 符号链接</span></span><br><span class="line">/usr/lib/libssl.so -&gt; libssl.so.1.0         <span class="comment"># 符号链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看链接</span></span><br><span class="line">$ <span class="built_in">ls</span> -la /usr/lib/libssl*</span><br><span class="line">-rw-r--r-- 1 root root 345678 libssl.so.1.0.0</span><br><span class="line">lrwxrwxrwx 1 root root     15 libssl.so -&gt; libssl.so.1.0</span><br><span class="line">lrwxrwxrwx 1 root root     17 libssl.so.1.0 -&gt; libssl.so.1.0.0</span><br></pre></td></tr></table></figure>
+<h2 id="软连接技术的发展历程"><a href="#软连接技术的发展历程" class="headerlink" title="软连接技术的发展历程"></a>软连接技术的发展历程</h2><p>通过学习，我了解到软连接技术有着丰富的发展历程：</p>
+<h3 id="20年前-2004年-Unix系统库管理时期"><a href="#20年前-2004年-Unix系统库管理时期" class="headerlink" title="20年前 (2004年) - Unix系统库管理时期"></a>20年前 (2004年) - Unix系统库管理时期</h3><p>那时候，软连接主要应用于系统库的版本管理。更多关于 Unix 系统的信息可以查看 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/UNIX">Unix 历史</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统库的版本管理</span></span><br><span class="line">/usr/lib/libssl.so.1.0.0    <span class="comment"># 实际的库文件</span></span><br><span class="line">/usr/lib/libssl.so.1.0 -&gt; libssl.so.1.0.0  <span class="comment"># 符号链接</span></span><br><span class="line">/usr/lib/libssl.so -&gt; libssl.so.1.0         <span class="comment"># 符号链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看链接</span></span><br><span class="line">$ <span class="built_in">ls</span> -la /usr/lib/libssl*</span><br><span class="line">-rw-r--r-- 1 root root 345678 libssl.so.1.0.0</span><br><span class="line">lrwxrwxrwx 1 root root     15 libssl.so -&gt; libssl.so.1.0</span><br><span class="line">lrwxrwxrwx 1 root root     17 libssl.so.1.0 -&gt; libssl.so.1.0.0</span><br></pre></td></tr></table></figure>
 
-<h3 id="10年前-2014年-Web部署版本管理"><a href="#10年前-2014年-Web部署版本管理" class="headerlink" title="10年前 (2014年) - Web部署版本管理"></a>10年前 (2014年) - Web部署版本管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 网站部署目录结构</span></span><br><span class="line"><span class="comment"># 网站部署目录结构</span></span><br><span class="line">/var/www/</span><br><span class="line">├── releases/</span><br><span class="line">│   ├── 20140301/     <span class="comment"># 旧版本</span></span><br><span class="line">│   ├── 20140315/     <span class="comment"># 旧版本  </span></span><br><span class="line">│   └── 20140401/     <span class="comment"># 新版本</span></span><br><span class="line">└── current -&gt; releases/20140401/  <span class="comment"># 符号链接指向当前版本</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署新版本的过程</span></span><br><span class="line">$ <span class="built_in">ln</span> -sfn /var/www/releases/20140401 /var/www/current</span><br><span class="line"></span><br><span class="line"><span class="comment"># Web服务器配置指向</span></span><br><span class="line">DocumentRoot /var/www/current</span><br></pre></td></tr></table></figure>
+<p>这种方式让系统管理员可以在升级库文件时，只需要更改链接指向，而不影响使用这些库的程序。</p>
+<h3 id="10年前-2014年-Web部署版本管理时期"><a href="#10年前-2014年-Web部署版本管理时期" class="headerlink" title="10年前 (2014年) - Web部署版本管理时期"></a>10年前 (2014年) - Web部署版本管理时期</h3><p>随着Web开发的发展，软连接开始在部署管理中发挥重要作用。关于现代部署策略，推荐阅读 <a target="_blank" rel="noopener" href="https://martinfowler.com/bliki/BlueGreenDeployment.html">蓝绿部署</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 网站部署目录结构</span></span><br><span class="line">/var/www/</span><br><span class="line">├── releases/</span><br><span class="line">│   ├── 20140301/     <span class="comment"># 旧版本</span></span><br><span class="line">│   ├── 20140315/     <span class="comment"># 旧版本  </span></span><br><span class="line">│   └── 20140401/     <span class="comment"># 新版本</span></span><br><span class="line">└── current -&gt; releases/20140401/  <span class="comment"># 符号链接指向当前版本</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 部署新版本的过程</span></span><br><span class="line">$ <span class="built_in">ln</span> -sfn /var/www/releases/20140401 /var/www/current</span><br><span class="line"></span><br><span class="line"><span class="comment"># Web服务器配置指向</span></span><br><span class="line">DocumentRoot /var/www/current</span><br></pre></td></tr></table></figure>
 
-<h3 id="现在-2024年-Node-js生态系统"><a href="#现在-2024年-Node-js生态系统" class="headerlink" title="现在 (2024年) - Node.js生态系统"></a>现在 (2024年) - Node.js生态系统</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 项目结构</span></span><br><span class="line">my-project/</span><br><span class="line">├── node_modules/</span><br><span class="line">│   ├── .bin/</span><br><span class="line">│   │   ├── webpack -&gt; ../webpack/bin/webpack.js  <span class="comment"># 符号链接</span></span><br><span class="line">│   │   └── eslint -&gt; ../eslint/bin/eslint.js</span><br><span class="line">│   ├── webpack/</span><br><span class="line">│   └── eslint/</span><br><span class="line">└── package.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装的包</span></span><br><span class="line">/usr/local/lib/node_modules/typescript/</span><br><span class="line">/usr/local/bin/tsc -&gt; ../lib/node_modules/typescript/bin/tsc  <span class="comment"># 全局命令链接</span></span><br></pre></td></tr></table></figure>
+<p>这种模式让开发团队能够实现零停机部署和快速回滚。</p>
+<h3 id="现在-2024年-Node-js生态系统时期"><a href="#现在-2024年-Node-js生态系统时期" class="headerlink" title="现在 (2024年) - Node.js生态系统时期"></a>现在 (2024年) - Node.js生态系统时期</h3><p>在现代开发环境中，软连接在包管理和开发工具链中扮演着重要角色。了解更多可以访问 <a target="_blank" rel="noopener" href="https://docs.npmjs.com/">npm 官方文档</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 项目结构</span></span><br><span class="line">my-project/</span><br><span class="line">├── node_modules/</span><br><span class="line">│   ├── .bin/</span><br><span class="line">│   │   ├── webpack -&gt; ../webpack/bin/webpack.js  <span class="comment"># 符号链接</span></span><br><span class="line">│   │   └── eslint -&gt; ../eslint/bin/eslint.js</span><br><span class="line">│   ├── webpack/</span><br><span class="line">│   └── eslint/</span><br><span class="line">└── package.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局安装的包</span></span><br><span class="line">/usr/local/lib/node_modules/typescript/</span><br><span class="line">/usr/local/bin/tsc -&gt; ../lib/node_modules/typescript/bin/tsc  <span class="comment"># 全局命令链接</span></span><br></pre></td></tr></table></figure>
 
+<p>现代容器化环境中，软连接也帮助我们灵活管理配置。关于 <a target="_blank" rel="noopener" href="https://docs.docker.com/">Docker</a> 的更多信息：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Docker 容器中的配置文件</span></span><br><span class="line">/app/config/production.yml   <span class="comment"># 生产环境配置</span></span><br><span class="line">/app/config/development.yml  <span class="comment"># 开发环境配置</span></span><br><span class="line">/app/config/current.yml -&gt; production.yml  <span class="comment"># 当前使用的配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 容器启动时根据环境变量切换</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$NODE_ENV</span>&quot;</span> = <span class="string">&quot;development&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">ln</span> -sf development.yml /app/config/current.yml</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
-<p>软连接已经从简单的系统管理工具发展为现代开发中不可缺少的技术，特别是在包管理和微服务架构中发挥重要作用。</p>
+<h2 id="验证软连接的有效性"><a href="#验证软连接的有效性" class="headerlink" title="验证软连接的有效性"></a>验证软连接的有效性</h2><p>为了确认软连接是否正常工作，可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看链接详情</span></span><br><span class="line"><span class="built_in">ls</span> -la themes/next</span><br><span class="line"><span class="comment"># 输出示例: next -&gt; ../node_modules/hexo-theme-next</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查链接是否有效</span></span><br><span class="line">file themes/next</span><br><span class="line"><span class="comment"># 输出示例: themes/next: symbolic link to ../node_modules/hexo-theme-next</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资源"><a href="#参考资源" class="headerlink" title="参考资源"></a>参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://hexo.io/docs/">Hexo 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://theme-next.js.org/">NexT 主题文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-ln.html">Linux ln 命令详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/">npm 包管理器</a></li>
+</ul>
+<h2 id="反思与总结"><a href="#反思与总结" class="headerlink" title="反思与总结"></a>反思与总结</h2><p>通过这次解决主题路径问题的经历，我深刻体会到软连接技术的价值。它不仅解决了当前的具体问题，更让我了解到这项技术从简单的系统管理工具发展为现代开发中不可缺少的技术基础，特别是在包管理和微服务架构中的重要作用。</p>
+<p>每一种技术的存在都有其历史背景和实用价值，理解这些背景有助于我们更好地运用这些工具来解决实际问题。</p>
+<hr>
+<blockquote>
+<p>如果您对本文有任何疑问或建议，欢迎在评论区交流讨论。</p>
+</blockquote>
 
       
     </div>
@@ -440,6 +468,171 @@
 <p>为了实现这一目标，我计划提前做好饭菜，并利用冰箱储存食物，简单加热后食用。我希望通过这种方式，既能满足身体的需求，又能更高效地管理时间。</p>
 <hr>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>今天的训练和饮食调整让我对自己的身体状态有了更深的了解。我希望通过持续的观察和调整，逐步实现自己的健康目标，同时在过程中保持对身体的尊重和耐心。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://shaoliang123456.github.io/shaoliang123456/2025/08/30/8%E6%9C%8831%E6%97%A5%E8%BF%90%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/shaoliang123456/images/avatar.gif">
+      <meta itemprop="name" content="Leon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/shaoliang123456/2025/08/30/8%E6%9C%8831%E6%97%A5%E8%BF%90%E5%8A%A8/" class="post-title-link" itemprop="url">8月31日运动</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-30 22:03:11" itemprop="dateCreated datePublished" datetime="2025-08-30T22:03:11+08:00">2025-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-08-31 22:38:08" itemprop="dateModified" datetime="2025-08-31T22:38:08+08:00">2025-08-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/shaoliang123456/categories/%E8%BF%90%E5%8A%A8%E4%B8%8E%E5%81%A5%E5%BA%B7/" itemprop="url" rel="index"><span itemprop="name">运动与健康</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="今日运动体验"><a href="#今日运动体验" class="headerlink" title="今日运动体验"></a>今日运动体验</h2><h3 id="晨间壶铃练习"><a href="#晨间壶铃练习" class="headerlink" title="晨间壶铃练习"></a>晨间壶铃练习</h3><p>今天早上，我选择跟着<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1PuDsYrEg5?spm_id_from=333.788.videopod.episodes&vd_source=3b5e9bd854d050ce2814f1c0298a3188&p=7">【beachbody】壶铃基础</a>练习壶铃。我使用了8KG的壶铃，这对我来说是一个相对轻松的重量，让我能够专注于动作的规范性和肌肉的感知。</p>
+<h3 id="中午力量训练"><a href="#中午力量训练" class="headerlink" title="中午力量训练"></a>中午力量训练</h3><p>在中午一点左右，我前往乐刻健身房进行力量训练。在训练过程中，我注意到自己的肩膀稳定性还有提升空间，这让我更清楚了当前的训练重点。我意识到现阶段的目标不是追求肌肉肥大，而是专注于：</p>
+<ul>
+<li>核心稳定性的提升</li>
+<li>肌肉耐力的增强</li>
+<li>柔韧性的改善</li>
+</ul>
+<h4 id="今日训练安排：拉力日（背、二头肌、后肩）-核心"><a href="#今日训练安排：拉力日（背、二头肌、后肩）-核心" class="headerlink" title="今日训练安排：拉力日（背、二头肌、后肩）+ 核心"></a>今日训练安排：拉力日（背、二头肌、后肩）+ 核心</h4><p><strong>训练目标：</strong> 肩胛骨稳定性，胸椎旋转柔韧性，后侧链与抗旋转核心</p>
+<p><strong>动态热身环节：</strong></p>
+<ol>
+<li>泡沫轴放松背阔肌、背部：1分钟</li>
+<li>弹力带面拉（轻重量热身）：15次</li>
+<li>世界最伟大拉伸：每侧5次</li>
+<li>猫牛式：10次</li>
+</ol>
+<p><strong>主要训练内容：</strong></p>
+<ol>
+<li><p><strong>引体向上（辅助版本）</strong>：4组 × 8-10次</p>
+<ul>
+<li>使用辅助负重9公斤的设置</li>
+<li>感受：能够完成预设次数，肌肉激活良好</li>
+</ul>
+</li>
+<li><p><strong>单臂哑铃划船</strong>：4组 × 每侧8-10次</p>
+<ul>
+<li>重量：10LB～15LB</li>
+<li>观察：感觉肩膀在某些角度有轻微的活动限制</li>
+</ul>
+</li>
+<li><p><strong>杠铃直腿硬拉</strong>：3组 × 6-8次</p>
+<ul>
+<li>重量：40公斤</li>
+<li>反思：意识到背部收紧的感觉还需要进一步体会和加强</li>
+</ul>
+</li>
+<li><p><strong>反向飞鸟（器械）</strong>：3组 × 12-15次</p>
+<ul>
+<li>重量：5LB-10LB</li>
+<li>体验：肌肉激活的感觉不够明显，可能需要调整重量或动作角度</li>
+</ul>
+</li>
+<li><p><strong>哑铃弯举</strong>：3组 × 10-12次</p>
+<ul>
+<li>重量：25LB</li>
+<li>注意：右肩有轻微的不稳定感觉</li>
+</ul>
+</li>
+<li><p><strong>农夫行走</strong>：考虑到早上已进行壶铃练习，今天选择跳过这个动作</p>
+</li>
+</ol>
+<p><strong>训练后拉伸：</strong></p>
+<ol>
+<li>背阔肌拉伸：每侧45秒</li>
+<li>猫牛式：60秒</li>
+<li>二头肌拉伸：每侧45秒</li>
+</ol>
+<h3 id="下午自然徒步"><a href="#下午自然徒步" class="headerlink" title="下午自然徒步"></a>下午自然徒步</h3><p>下午4点，我参加了一个户外活动，前往九溪十八涧。由于刚下过雨，这里与平时相比格外宁静，几乎没有其他游客。我们还游览了龙井村，整个行程让我走了两万多步，这是一次非常愉悦但也很有挑战性的徒步体验。</p>
+<h2 id="身体感受与内心观察"><a href="#身体感受与内心观察" class="headerlink" title="身体感受与内心观察"></a>身体感受与内心观察</h2><p>通过今天的训练，我更清楚地认识到自己当前的身体状况：</p>
+<h3 id="对肩膀稳定性的认知"><a href="#对肩膀稳定性的认知" class="headerlink" title="对肩膀稳定性的认知"></a>对肩膀稳定性的认知</h3><p>我注意到肩膀的稳定性确实需要更多关注，这在一定程度上限制了我在某些动作中使用更大的重量。我认为这不是一个”问题”，而是一个需要耐心改善的身体特点。</p>
+<h3 id="对训练方向的思考"><a href="#对训练方向的思考" class="headerlink" title="对训练方向的思考"></a>对训练方向的思考</h3><p>我意识到增加弹力带训练可能是一个很好的补充方案，它能帮助我：</p>
+<ul>
+<li>改善肩膀的稳定性</li>
+<li>增强小肌群的协调能力</li>
+<li>提供更安全的训练环境</li>
+</ul>
+<h3 id="对饮食管理的新想法"><a href="#对饮食管理的新想法" class="headerlink" title="对饮食管理的新想法"></a>对饮食管理的新想法</h3><p>今天我找到了厨房秤，这让我想到可以更科学地管理饮食。我计划：</p>
+<ul>
+<li>提前准备三天的食物分量</li>
+<li>更仔细地观察自己的饮食摄入</li>
+<li>通过合理的热量控制来降低体脂</li>
+</ul>
+<h2 id="未来的愿望与计划"><a href="#未来的愿望与计划" class="headerlink" title="未来的愿望与计划"></a>未来的愿望与计划</h2><p>基于今天的体验和观察，我希望在接下来的训练中：</p>
+<ol>
+<li><strong>继续加强肩膀稳定性训练</strong> - 这将为我的整体训练质量带来提升</li>
+<li><strong>增加弹力带练习</strong> - 作为主训练的有效补充</li>
+<li><strong>更加关注饮食质量</strong> - 通过科学的量化管理支持训练目标</li>
+<li><strong>保持对身体信号的敏感</strong> - 在训练中更好地倾听身体的反馈</li>
+</ol>
+<h2 id="感谢与期待"><a href="#感谢与期待" class="headerlink" title="感谢与期待"></a>感谢与期待</h2><p>感谢身体今天的努力和配合，感谢大自然提供的美好徒步环境，也感谢健身房提供的训练条件。</p>
+<p>我期待在接下来的训练中继续探索身体的潜能，同时保持对过程的耐心和对结果的信心。每一次训练都是与身体的对话，每一次进步都值得庆祝。</p>
+<hr>
 
       
     </div>
