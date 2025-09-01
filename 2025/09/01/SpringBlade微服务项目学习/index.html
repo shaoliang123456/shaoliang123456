@@ -19,22 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"shaoliang123456.github.io","root":"/shaoliang123456/","images":"/shaoliang123456/images","scheme":"Pisces","darkmode":false,"version":"8.24.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/shaoliang123456/js/config.js" defer></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://shaoliang123456.github.io/shaoliang123456/categories/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/index.html">
+    <meta name="description" content="写在前面由于技术，市场需求在不断的发生变化，Java是国内最主流的技术，同时目前NodeJs，全栈也是越来越火，技多不压身，所以笔者在网上找了一个Java项目 SpringBlade，把它转成NodeJs项目实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java项目改造成NextJs+React(一)">
+<meta property="og:url" content="https://shaoliang123456.github.io/shaoliang123456/2025/09/01/SpringBlade%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="写在前面由于技术，市场需求在不断的发生变化，Java是国内最主流的技术，同时目前NodeJs，全栈也是越来越火，技多不压身，所以笔者在网上找了一个Java项目 SpringBlade，把它转成NodeJs项目实现。">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-01T00:49:55.000Z">
+<meta property="article:modified_time" content="2025-09-01T01:17:55.928Z">
 <meta property="article:author" content="Leon">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://shaoliang123456.github.io/shaoliang123456/categories/%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84/">
+<link rel="canonical" href="https://shaoliang123456.github.io/shaoliang123456/2025/09/01/SpringBlade%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"","path":"categories/技术架构/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://shaoliang123456.github.io/shaoliang123456/2025/09/01/SpringBlade%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/","path":"2025/09/01/SpringBlade微服务项目学习/","title":"Java项目改造成NextJs+React(一)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Category: 技术架构 | Hexo</title>
+<title>Java项目改造成NextJs+React(一) | Hexo</title>
   
 
 
@@ -111,7 +118,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -124,6 +131,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -163,50 +171,105 @@
 
     </div>
 
-    <div class="main-inner category posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">技术架构
-          <small>Category</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://shaoliang123456.github.io/shaoliang123456/2025/09/01/SpringBlade%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/shaoliang123456/images/avatar.gif">
+      <meta itemprop="name" content="Leon">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java项目改造成NextJs+React(一) | Hexo">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java项目改造成NextJs+React(一)
         </h1>
-      </div>
 
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2025</span>
+
+      <time title="Created: 2025-09-01 08:49:55 / Modified: 09:17:55" itemprop="dateCreated datePublished" datetime="2025-09-01T08:49:55+08:00">2025-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/shaoliang123456/categories/NextJs/" itemprop="url" rel="index"><span itemprop="name">NextJs</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>由于技术，市场需求在不断的发生变化，Java是国内最主流的技术，同时目前NodeJs，全栈也是越来越火，技多不压身，所以笔者在网上找了一个Java项目 SpringBlade，把它转成NodeJs项目实现。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2025-08-31T10:08:36+08:00"
-              content="2025-08-31">
-          08-31
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/shaoliang123456/2025/08/31/%E8%BD%AF%E8%BF%9E%E6%8E%A5/" itemprop="url">
-            <span itemprop="name">软连接</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/shaoliang123456/tags/Java/" rel="tag"># Java</a>
+              <a href="/shaoliang123456/tags/Node-js/" rel="tag"># Node.js</a>
+              <a href="/shaoliang123456/tags/React/" rel="tag"># React</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/shaoliang123456/2025/08/31/%E8%BD%AF%E8%BF%9E%E6%8E%A5/" rel="prev" title="软连接">
+                  <i class="fa fa-angle-left"></i> 软连接
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/shaoliang123456/2025/09/01/%E8%B7%A8%E5%9F%9F/" rel="next" title="跨域">
+                  跨域 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
